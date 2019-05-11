@@ -1,0 +1,17 @@
+C:\Users\Richard LeBlanc\Dropbox\CPSC 4400\Code for studios and projects\project3 - My version\obj\Debug\Project3.csprojResolveAssemblyReference.cache
+C:\Users\Richard LeBlanc\Dropbox\CPSC 4400\Code for studios and projects\project3 - My version\obj\Debug\TCCL-AST.exe
+C:\Users\Richard LeBlanc\Dropbox\CPSC 4400\Code for studios and projects\project3 - My version\obj\Debug\TCCL-AST.pdb
+C:\Users\Richard LeBlanc\Dropbox\CPSC 4400\Code for studios and projects\project3 - My version\bin\Debug\TCCL-AST.exe.config
+C:\Users\Richard LeBlanc\Dropbox\CPSC 4400\Code for studios and projects\project3 - My version\bin\Debug\TCCL-AST.exe
+C:\Users\Richard LeBlanc\Dropbox\CPSC 4400\Code for studios and projects\project3 - My version\bin\Debug\TCCL-AST.pdb
+C:\Users\lebla\Dropbox\CPSC 4400\Code for studios and projects\project3 - My version\bin\Debug\TCCL-AST.exe.config
+C:\Users\lebla\Dropbox\CPSC 4400\Code for studios and projects\project3 - My version\bin\Debug\TCCL-AST.exe
+C:\Users\lebla\Dropbox\CPSC 4400\Code for studios and projects\project3 - My version\bin\Debug\TCCL-AST.pdb
+C:\Users\lebla\Dropbox\CPSC 4400\Code for studios and projects\project3 - My version\obj\Debug\TCCL-AST.exe
+C:\Users\lebla\Dropbox\CPSC 4400\Code for studios and projects\project3 - My version\obj\Debug\TCCL-AST.pdb
+C:\Users\lebla\Documents\GitHub\Project-3\bin\Debug\TCCL-AST.exe.config
+C:\Users\lebla\Documents\GitHub\Project-3\bin\Debug\TCCL-AST.exe
+C:\Users\lebla\Documents\GitHub\Project-3\bin\Debug\TCCL-AST.pdb
+C:\Users\lebla\Documents\GitHub\Project-3\obj\Debug\Project3.csprojResolveAssemblyReference.cache
+C:\Users\lebla\Documents\GitHub\Project-3\obj\Debug\TCCL-AST.exe
+C:\Users\lebla\Documents\GitHub\Project-3\obj\Debug\TCCL-AST.pdb

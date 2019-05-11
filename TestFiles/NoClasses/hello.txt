@@ -1,0 +1,6 @@
+/*Tests calls to Writeline with a string */
+
+	public void main ()
+	{
+		WriteLine("Hello, World");
+	}

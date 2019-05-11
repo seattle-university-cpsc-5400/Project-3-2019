@@ -1,0 +1,281 @@
+
+// ==========================================================================
+//  GPPG error listing for yacc source file <TCCL.grammar.y - 4/29/2019 9:25:56 AM>
+// ==========================================================================
+//  Version:  1.5.2
+//  Machine:  RJL-SURFACE4
+//  DateTime: 4/29/2019 9:26:03 AM
+//  UserName: lebla
+// ==========================================================================
+
+
+%namespace ASTBuilder
+%partial
+%parsertype TCCLParser
+%visibility internal
+%tokentype Token
+%YYSTYPE AbstractNode
+
+%option verbose
+//^^^^^^^^^^^^^
+// Error: Unknown %keyword in this context
+// Error: Syntax error, unexpected ident
+// ---------------------------------------
+
+%start CompilationUnit
+
+%token AND ASTERISK BANG BOOLEAN CLASS
+%token COLON COMMA ELSE EQUALS HAT
+%token IDENTIFIER IF INSTANCEOF INT INT_NUMBER
+%token LBRACE LBRACKET LITERAL LPAREN MINUSOP
+%token NEW NULL OP_EQ OP_GE OP_GT
+%token OP_LAND OP_LE OP_LOR OP_LT OP_NE
+%token PERCENT PERIOD PIPE PLUSOP PRIVATE
+%token PUBLIC QUESTION RBRACE RBRACKET RETURN
+%token RPAREN RSLASH SEMICOLON STATIC STRUCT
+%token SUPER THIS TILDE VOID WHILE
+
+
+%right EQUALS
+%left  OP_LOR
+%left  OP_LAND
+%left  PIPE
+%left  HAT
+%left  AND
+%left  OP_EQ, OP_NE
+%left  OP_GT, OP_LT, OP_LE, OP_GE
+%left  PLUSOP, MINUSOP
+%left  ASTERISK, RSLASH, PERCENT
+%left  UNARY 
+
+%%
+
+CompilationUnit     :   ClassDeclaration                    {$$ = new Identifier("Not Implemented: ClassDeclaration");}
+                    |	MethodDeclarations                  {$$ = new CompilationUnit($1);} 
+					     ;
+
+
+MethodDeclarations	:	MethodDeclaration					 { $$ = $1;  }
+					      |	MethodDeclarations MethodDeclaration { $1.makeSibling($2); $$ = $1;}
+					      ;
+
+MethodDeclaration           :   Modifiers TypeSpecifier MethodSignature MethodBody          {$$ = new MethodDeclaration($1, $2, $3, $4); }
+                            ;
+
+MethodSignature             :   Identifier LPAREN ParameterList RPAREN                      { $$ = new MethodSignature($1, $3); }
+                            |   Identifier LPAREN RPAREN                                    { $$ = new MethodSignature($1); }
+                            ;
+
+ParameterList               :   Parameter                                                   { $$ = new ParameterList($1); }
+                            |   ParameterList COMMA Parameter                               { $1.adoptChildren($2); $$ = $1;}  
+                            ;
+
+Parameter                   :   TypeSpecifier Identifier                                    { $$ = new Parameter($1, $2); }
+                            ;
+
+MethodBody                  :   Block                                                       { $$ = new MethodBody($1); }
+                            ;
+
+
+
+ClassDeclaration    :   Modifiers CLASS Identifier ClassBody {$$ = new ClassDeclaration($1, $3, $4);}
+                    ;
+
+Modifiers           :   PUBLIC                              { $$ = new Modifiers(ModifierType.PUBLIC);}
+                    |   PRIVATE                             { $$ = new Modifiers(ModifierType.PRIVATE);}
+                    |   STATIC                              { $$ = new Modifiers(ModifierType.STATIC);}
+                    |   Modifiers PUBLIC                    { $$ = new Identifier("Not Implemented: Modifier List");}
+                    |   Modifiers PRIVATE                   { $$ = new Identifier("Not Implemented: Modifier List");}
+                    |   Modifiers STATIC                    { $$ = new Identifier("Not Implemented: Modifier List");}
+                    ;
+
+ClassBody           :   LBRACE FieldDeclarations RBRACE     
+                    |   LBRACE RBRACE                       
+                    ;
+
+FieldDeclarations   :   FieldDeclaration                    
+                    |   FieldDeclarations FieldDeclaration  
+                    ;
+
+FieldDeclaration    :   FieldVariableDeclaration SEMICOLON  
+                    |   MethodDeclaration                   
+                    |   ConstructorDeclaration                     
+                    |   StaticInitializer                   
+                    |   StructDeclaration                   
+                    ;
+
+StructDeclaration   :   Modifiers STRUCT Identifier ClassBody   { $$ = new Identifier("Not Implemented: StructDeclaration");}
+                    ;
+
+
+
+FieldVariableDeclaration    :   Modifiers TypeSpecifier FieldVariableDeclarators            {}
+                            ;
+
+TypeSpecifier               :   TypeName                                                    { $$ = $1; }
+                            |   ArraySpecifier                                              
+                            ;
+
+TypeName                    :   PrimitiveType                                               { $$ = $1; }
+                            |   QualifiedName                                               
+                            ;
+
+ArraySpecifier              :   TypeName LBRACKET RBRACKET                                  {}
+                            ;
+                            
+PrimitiveType               :   BOOLEAN                                                     { $$ = new PrimitiveType(EnumPrimitiveType.BOOLEAN); }
+                            |   INT                                                         { $$ = new PrimitiveType(EnumPrimitiveType.INT); }
+                            |   VOID                                                        { $$ = new PrimitiveType(EnumPrimitiveType.VOID); }
+                            ;
+
+FieldVariableDeclarators    :   FieldVariableDeclaratorName                                 {}
+                            |   FieldVariableDeclarators COMMA FieldVariableDeclaratorName  {}
+                            ;
+
+
+FieldVariableDeclaratorName :   Identifier                                                  {}
+                            ;
+
+ConstructorDeclaration      :   Modifiers MethodSignature Block                             {}
+                            ;
+
+StaticInitializer           :   STATIC Block                                                {}
+                            ;
+        
+/*
+ * These can't be reorganized, because the order matters.
+ * For example:  int i;  i = 5;  int j = i;
+ */
+
+Block                       :   LBRACE LocalItems RBRACE                                   { $$ =  new Identifier("Not Implemented: Block"); }
+                            |   LBRACE RBRACE                                              { $$ =  new Identifier("Not Implemented: Block"); }
+                            ;
+
+LocalItems			          :   LocalItem						                                 
+                            |   LocalItems LocalItem
+                            ;    
+
+LocalItem                     :   LocalVariableDeclaration							        
+                              |   Statement                                           
+                              ;
+
+LocalVariableDeclaration		:   TypeSpecifier LocalVariableNames SEMICOLON   
+                              |   StructDeclaration                                  
+                              ;
+
+LocalVariableNames          :   Identifier                                 
+                            |   LocalVariableNames COMMA Identifier         
+                            ;
+
+                            
+Statement                   :   EmptyStatement                                              
+                            |   ExpressionStatement SEMICOLON                             
+                            |   SelectionStatement                                        
+                            |   IterationStatement                                         
+                            |   ReturnStatement                                            
+                            |   Block                                                      
+                            ;
+
+EmptyStatement              :   SEMICOLON                                                   
+                            ;
+
+ExpressionStatement         :   Expression                                                
+                            ;
+
+/*
+ *  You will eventually have to address the shift/reduce error that
+ *     occurs when the second IF-rule is uncommented.
+ *
+ */
+
+SelectionStatement          :   IF LPAREN Expression RPAREN Statement ELSE Statement
+//                          |   IF LPAREN Expression RPAREN Statement
+                            ;
+
+
+IterationStatement          :   WHILE LPAREN Expression RPAREN Statement
+                            ;
+
+ReturnStatement             :   RETURN Expression SEMICOLON
+                            |   RETURN            SEMICOLON
+                            ;
+
+ArgumentList                :   Expression
+                            |   ArgumentList COMMA Expression
+                            ;
+
+
+// TODO
+Expression                  :   QualifiedName EQUALS Expression     { $$ = new Expression($1, ExprType.EQUALS, $3); }
+   /* short-circuit OR  */  |   Expression OP_LOR Expression   
+   /* short-circuit AND */  |   Expression OP_LAND Expression   
+                            |   Expression PIPE Expression
+                            |   Expression HAT Expression
+                            |   Expression AND Expression
+                            |   Expression OP_EQ Expression
+                            |   Expression OP_NE Expression
+                            |   Expression OP_GT Expression
+                            |   Expression OP_LT Expression
+                            |   Expression OP_LE Expression
+                            |   Expression OP_GE Expression
+                            |   Expression PLUSOP Expression		{ $$ = new Expression($1, ExprType.PLUSOP, $3); }
+                            |   Expression MINUSOP Expression		{ $$ = new Expression($1, ExprType.MINUSOP, $3); }
+                            |   Expression ASTERISK Expression
+                            |   Expression RSLASH Expression
+                            |   Expression PERCENT Expression   /* remainder */
+                            |   ArithmeticUnaryOperator Expression  %prec UNARY
+                            |   PrimaryExpression               { $$ = $1; }
+                            ;
+
+ArithmeticUnaryOperator     :   PLUSOP
+                            |   MINUSOP
+                            ;
+                            
+PrimaryExpression           :   QualifiedName                   { $$ = $1;}   
+                            |   NotJustName                     { $$ = $1;}
+                            ;
+
+NotJustName                 :   SpecialName                     { $$ = $1;}
+                            |   ComplexPrimary                  { $$ = $1;}
+                            ;
+
+ComplexPrimary              :   LPAREN Expression RPAREN        { $$ = $2;}
+                            |   ComplexPrimaryNoParenthesis     { $$ = $1;}
+                            ;
+
+ComplexPrimaryNoParenthesis :   LITERAL                         { $$ = $1;}
+                            |   Number                          { $$ = $1;}
+                            |   FieldAccess                     { $$ = $1;}   
+                            |   MethodCall                      { $$ = $1;}    
+                            ;
+
+FieldAccess                 :   NotJustName PERIOD Identifier   { $$ = new Identifier("Not Implemented: FieldRef");}   
+                            ;       
+
+MethodCall                  :   MethodReference LPAREN ArgumentList RPAREN
+                                                                
+                            |   MethodReference LPAREN RPAREN   { $$ = new Identifier("Not Implemented: MethodRef()");}
+                            ;
+
+MethodReference             :   ComplexPrimaryNoParenthesis     
+                            |   QualifiedName                   
+                            |   SpecialName                     
+                            ;
+
+QualifiedName               :   Identifier                                     
+                            |   QualifiedName PERIOD Identifier                             
+                            ;
+SpecialName                 :   THIS                            
+                            |   NULL                            
+                            ;
+
+Identifier                  :   IDENTIFIER                      { $$ = $1; }   // Semantic value povided by scanner
+                            ;
+
+Number                      :   INT_NUMBER                      { $$ = $1; }   // Semantic value povided by scanner
+                            ;
+
+%%
+
+// ==========================================================================
+
