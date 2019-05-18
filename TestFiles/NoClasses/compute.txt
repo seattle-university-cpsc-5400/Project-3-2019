@@ -1,5 +1,5 @@
-/*Tests calls to Writeline with a string */
-/*  Calls WriteLine with integers        */
+/*Tests declarations, expressions, assignments plus calls to 
+   Write with a string and WriteLine with computed values */
    
     public void main ()
     {

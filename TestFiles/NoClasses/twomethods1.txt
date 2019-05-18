@@ -9,6 +9,10 @@
 	
 	public void main ()
 	{
+		int i;
 		check(12345);
+		WriteLine("Back in main");
+		i = 12;
+		check(i*12);
 		WriteLine("Back in main");
 	}
