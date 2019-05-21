@@ -17,7 +17,7 @@ namespace ASTBuilder
 	   private AbstractNode parent;
 	   private AbstractNode child;
 	   private AbstractNode firstSib;
-	   private Type type;
+	   private TypeDescriptor type;
 
 	   public AbstractNode()
 	   {
@@ -26,6 +26,7 @@ namespace ASTBuilder
 		  firstSib = this;
 		  child = null;
 		  nodeNum = ++nodeNums;
+			type = null;
 	   }
 
 	   /// <summary>
