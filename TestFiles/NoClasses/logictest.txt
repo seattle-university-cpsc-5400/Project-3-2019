@@ -1,9 +1,5 @@
 /* Complex comparisons: ifs with & and | */
 
-  public static void WriteLine (String s) {
-     WriteLine(s);
-   }
-
    public static void main() {
      int i, j;
      i = 0;

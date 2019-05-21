@@ -1,5 +1,5 @@
 /* Complex comparisons:  tests method calls, ifs with & and |, assignment */
-/* Includes references to th output method via a qualified name */
+/* Includes references to the output method via a qualified name */
 
 public class logictest {
 

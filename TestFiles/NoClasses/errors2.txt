@@ -1,17 +1,15 @@
 /*Tests for handling erroneous use of types in if and while statements 
     and errors in method call argument lists  */
 
-public class fact2 {
-
    public static int factorial(int x) {
 
 /*  Erroneous use of an integer as the expression for an if statement  */
-      if x return 1;
+      if (x) return 1;
       else return x * factorial (x-1);
 
 /*  Trying to use not on an integer and using the result in an if statement  */
 /*  Only one error message should result if ErrorType is used correctly  */
-      if (not x) return 1;
+      if ( x & 5) return 1;
       else return x * factorial (x-1);
    }
 
@@ -31,4 +29,5 @@ public class fact2 {
         WriteLine (factorial);
         i = i + 1;
      }   
-   }
+  
+    }
